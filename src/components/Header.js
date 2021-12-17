@@ -1,12 +1,17 @@
 import PropTypes from 'prop-types'
 import Button from './Button'
 import { useLocation } from "react-router-dom";
+import { useHistory } from "react-router-dom";
 
-const Header = ({ title , updateShowSetTask, showAddTask}) => {
+const Header = ({ title , setTitle, toggleShowAddTask, toggleHideButton, showAddTask}) => {
     const location = useLocation()
+    let history = useHistory();
     const onClick = () => {
         console.log('click');
-        // updateShowSetTask();
+        toggleShowAddTask();
+        toggleHideButton();
+        setTitle('DB Assignment');
+        history.goBack();
     };
 
     return (
@@ -14,7 +19,7 @@ const Header = ({ title , updateShowSetTask, showAddTask}) => {
             <h1>
                 {title}
             </h1>
-            {location.pathname==='/' && <Button colour={!showAddTask ? 'green': 'red'} text={!showAddTask ? 'Add': 'Close'} onClick={onClick}/>}
+            {showAddTask && <Button colour='red' text='Back' onClick={onClick}/>}
         </header>
     )
 }
